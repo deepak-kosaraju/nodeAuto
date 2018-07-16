@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license 'MIT'
 description 'Installs/Configures nodejs Apps'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.1.1'
+version '0.1.2'
 
 recipe 'nodeAuto', 'Based setup and including other recipes'
 recipe 'nodeAuto::install_pkgs', 'Installs necessary packages for the requirements'

@@ -1,14 +1,4 @@
 ## nodeAuto
-Table of Contents
-=================
-
-* [Get Started](#get-started)
-  * [Design Principles](#design-principles)
-  * [Supported Configuration Orchestrator](#supported-configuration-orchestrator)
-  * [Application Attributes](#application-attributes)
-  * [Converge using KitchenCI](#converge-using-kitchenci)
-
-Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
 An application development team needs a new server 
 configured to run their new internal application. 
@@ -37,8 +27,39 @@ using commonly available libraries and tools
 - Aim to provide a simple but robust solution which others could 
 easily use and extend
 
-### Supported Chef Version
-- \>= 14.0
+## Requirements
+
+## Software (or) Tools
+
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - VirtualBox is a cross-platform virtualization application.
+- [Vagrant](https://www.vagrantup.com/downloads.html) - Vagrant provides easy to configure, reproducible, and portable work environments controlled by a single consistent workflow to help maximize the productivity and flexibility.
+- [ChefDK](https://downloads.chef.io/chefdk) - The Chef development kit contains all the tools you need to develop and test your infrastructure, built by the awesome Chef community
+ 
+
+### Cookbooks
+
+The following cookbooks are direct dependencies because they're used for common "default" functionality.
+
+- `nginx` for installing and configure nginx sites/streams
+- `nodejs` for installing node.js binaries
+- `iptables` for configured iptables using custom resources
+
+### Platforms
+
+The following platforms are supported and tested with Test Kitchen:
+
+- Ubuntu 14.04+
+- CentOS 7+
+
+Other Debian and RHEL family distributions are assumed to work.
+
+### Chef
+
+- Chef 14+
+
+## Attributes
+
+Node attributes for this cookbook are logically separated into different files. Some attributes are set only via a specific recipe.
 
 ### Application Attributes
 _*For Sake of this nodeAuto I am using same cookbook to configure multiple apps, but its good practice to seaparete cookbook for individual apps*_
@@ -84,7 +105,7 @@ default['nodeAuto']['node_js']['app'] = {
   }
 }
 ```
-### Converge using KitchenCI
+## Converge and Validate using KitchenCI
 ```bash
  $ kitchen list
 Instance             Driver   Provisioner  Verifier  Transport  Last Action    Last Error
