@@ -93,8 +93,16 @@ default-centos-71    Vagrant  ChefZero     Busser    Ssh        <Not Created>  <
 user-ubuntu-1404     Vagrant  ChefZero     Busser    Ssh        <Not Created>  <None>
 user-centos-71       Vagrant  ChefZero     Busser    Ssh        <Not Created>  <None>
 
-$ kitchen converge <Instance Name>
+# To Converge particular instance type
+$ kitchen converge <Instance Name> 
+example: kitchen converge default-ubuntu-1404
 
+(or)
+
+## To Converge all configured instance types 
+$ kitchen converge
+
+## Validate the service
 $ while read name;do kitchen exec $name -c 'curl -L http://localhost';done< <(kitchen list -b)
 -----> Execute command on default-ubuntu-1404.
        Hello World - from profile application running on host:default-ubuntu-1404 over port:8080
