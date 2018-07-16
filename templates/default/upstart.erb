@@ -1,0 +1,9 @@
+respawn
+respawn limit 15 5
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+script
+su - <%= node['nodeAuto']['node_js']['user']['name'] %> -c "NODE_ENV=<%= @init_conf['node_env'] %> exec <%= node['nodeAuto']['node_js']['bin'] %>  <%= @init_conf['dir'] + '/' + @init_conf['file'] %> 2>&1" >> <%= @init_conf['log_file'] %>
+end script

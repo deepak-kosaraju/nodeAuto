@@ -1,0 +1,13 @@
+## reverse proxy configuration managed by Chef
+upstream backend {
+    hash $remote_addr consistent;
+    server <%= @app['host'] %>:<%= @app['port'] %>;
+}
+
+server {
+    listen <%= node['nginx']['port'] %>;
+    proxy_connect_timeout 1s;
+    location / {
+        proxy_pass http://backend;
+    }
+}

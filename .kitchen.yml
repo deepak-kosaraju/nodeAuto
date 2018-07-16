@@ -1,0 +1,42 @@
+---
+# Running chef-client locally on the Box once it is provisioned...
+# sudo /opt/chef/embedded/bin/ruby /opt/chef/bin/chef-client --local-mode --config /tmp/kitchen/solo.rb --log_level auto --force-formatter --chef-zero-port 8889 --json-attributes /tmp/kitchen/dna.json
+# Running chef-client in local mode on box and loop every 2 sec
+# while true;do sudo /opt/chef/embedded/bin/ruby /opt/chef/bin/chef-client --local-mode --config /tmp/kitchen/solo.rb --log_level auto --force-formatter --chef-zero-port 8889 --json-attributes /tmp/kitchen/dna.json;sleep 2;done
+
+# Debug using chef-shell -z by running chef-zero
+# cd /tmp/kitchen
+# sudo /opt/chef/embedded/bin/gem install chef-zero
+# sudo /opt/chef/embedded/bin/chef-zero -d
+# sudo knife cookbook upload -a -c solo.rb
+# sudo knife role from file roles/user.json -c solo.rb
+# sudo /opt/chef/embedded/bin/ruby /opt/chef/bin/chef-shell -z --config /tmp/kitchen/solo.rb -o recipe[nodeAuto],role[user]
+
+driver:
+  name: vagrant
+
+provisioner:
+  ## using new kitchen provisioner attributes to setup chef
+  product_name: chef
+  product_version: '14.3.37'
+  roles_path: "test-kitchen/roles"
+
+# Uncomment the following verifier to leverage Inspec instead of Busser (the
+# default verifier)
+# verifier:
+  # name: inspec
+
+platforms:
+  - name: ubuntu-14.04
+  - name: centos-7.1
+
+suites:
+  - name: default
+    run_list:
+      - recipe[nodeAuto::default]
+    attributes:
+  - name: user
+    run_list:
+      - recipe[nodeAuto::default]
+      - role[user]
+    attributes:

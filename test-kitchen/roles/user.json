@@ -1,0 +1,59 @@
+{
+  "name": "user",
+  "description": "Role for Application user",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+    "nodeAuto": {
+      "node_js": {
+        "app": {
+          "user": {
+            "dir": "/opt/app/user",
+            "dir_mode": "755",
+            "file_mode": "774",
+            "file": "app.js",
+            "node_env": "test",
+            "log_dir": "/opt/app/profile/var/log",
+            "log_file": "/opt/app/profile/var/log/app.log",
+            "port": "8090",
+            "host": "127.0.0.1",
+            "message": "from user application",
+            "systemd": {
+              "Unit": {
+                "Description": "Simple Node App of nodeAuto Hello World!",
+                "After": "network-online.target",
+                "Wants": "network-online.target"
+              },
+              "Service": {
+                "ExecStart": "/usr/bin/node /opt/user/app.js",
+                "ExecStop": "/bin/kill $MAINPID",
+                "KillMode": "process",
+                "Restart": "on-failure",
+                "ExecReload": "/bin/kill -HUP $MAINPID"
+              },
+              "Install": {
+                "WantedBy": "multi-user.target"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "override_attributes": {
+    "nodeAuto": {
+      "node_js": {
+        "app": {
+          "profile": {
+            "enable": false
+          },
+          "user": {
+            "enable": true
+          }
+        }
+      }
+    }
+  },
+  "chef_type": "role",
+  "run_list": [],
+  "env_run_lists": {}
+}
