@@ -1,5 +1,21 @@
 ## nodeAuto
 
+Table of Contents
+=================
+
+* [Get Started](#get-started)
+  * [Design Principles](#design-principles)
+* [Requirements](#requirements)
+* [Software (or) Tools](#software-or-tools)
+  * [Cookbooks](#cookbooks)
+  * [Platforms](#platforms)
+  * [Chef](#chef)
+* [Attributes](#attributes)
+  * [Application Attributes](#application-attributes)
+* [Converge and Validate using KitchenCI](#converge-and-validate-using-kitchenci)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
+
 An application development team needs a new server 
 configured to run their new internal application. 
 
@@ -106,25 +122,26 @@ default['nodeAuto']['node_js']['app'] = {
 }
 ```
 ## Converge and Validate using KitchenCI
+_Note: Always run Kitchen test from cookbook root folder_
 ```bash
- $ kitchen list
+ ➜  nodeAuto (master)$ kitchen list
 Instance             Driver   Provisioner  Verifier  Transport  Last Action    Last Error
 default-ubuntu-1404  Vagrant  ChefZero     Busser    Ssh        <Not Created>  <None>
 default-centos-71    Vagrant  ChefZero     Busser    Ssh        <Not Created>  <None>
 user-ubuntu-1404     Vagrant  ChefZero     Busser    Ssh        <Not Created>  <None>
 user-centos-71       Vagrant  ChefZero     Busser    Ssh        <Not Created>  <None>
 
-# To Converge particular instance type
-$ kitchen converge <Instance Name> 
+## To Converge particular instance type
+➜  nodeAuto (master)$ kitchen converge <Instance Name> 
 example: kitchen converge default-ubuntu-1404
 
 (or)
 
 ## To Converge all configured instance types 
-$ kitchen converge
+<cookbook root folder>$ kitchen converge
 
 ## Validate the service
-$ while read name;do kitchen exec $name -c 'curl -L http://localhost';done< <(kitchen list -b)
+➜  nodeAuto (master)$ while read name;do kitchen exec $name -c 'curl -L http://localhost';done< <(kitchen list -b)
 -----> Execute command on default-ubuntu-1404.
        Hello World - from profile application running on host:default-ubuntu-1404 over port:8080
 -----> Execute command on default-centos-71.
@@ -135,7 +152,7 @@ $ while read name;do kitchen exec $name -c 'curl -L http://localhost';done< <(ki
        Hello World - from user application running on host:user-centos-71 over port:8090
 ```
 
-**Final Converge list**: `kitchen list -j`
+**Final Converge list**: `➜ nodeAuto(master)$ kitchen list -j`
 ```json
 [
   {
